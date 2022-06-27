@@ -1,0 +1,102 @@
+﻿@page "/students/{IdStudent:int}"
+@using cwiczenia11_mp_s23525.Models
+@inject NavigationManager naviManager
+@inject cwiczenia11_mp_s23525.Services.IStudentService StudentService
+<h3>StudentDetails</h3>
+
+<head>
+    <style>
+* {
+  box-sizing: border-box;
+  /*align-content: center;*/
+}
+
+.row {
+  display: flex;
+  margin-left:-5px;
+  margin-right:-5px;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 80%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+</style>
+</head>
+<body>
+
+<div class="row">
+    <div class="column">
+        <table>
+            <tr>
+                <th>First Name</th>
+                <td>@student.FirstName</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>@student.LastName</td>
+            </tr>
+            <tr>
+                <th>Birthdate</th>
+                <td>@student.Birthdate</td>
+            </tr>
+            <tr>
+                <th>Studies</th>
+                <td>@student.Studies</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="column">
+        <table>
+            <tr>
+                <th>URL</th>
+                <td>@student.Avatar</td>
+            </tr>
+            <tr>
+                <th>Avatar</th>
+                <td><img src=@student.Avatar width="250" height="250"/></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</body>
+
+
+<button @onclick="(() => Return())">Return</button>
+
+@code {
+
+    [Parameter]
+    public int IdStudent { get; set; }
+    Student student;
+
+    protected override void OnInitialized()
+    {
+        student = StudentService.GetStudent(IdStudent);
+    }
+
+    private void Return()
+    {
+        naviManager.NavigateTo("/students");
+    }
+
+
+}
